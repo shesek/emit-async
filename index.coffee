@@ -1,12 +1,13 @@
 { EventEmtter } = require 'events'
 
-iferr = (errfn, succfn) -> (err, a...) -> if err? then errfn err else succfn a...
+iferr = (fail, succ) -> (err) -> if err? then fail err else do succ
 
-async = (emitter, name, a..., cb) ->
+emitAsync = (emitter, name, a..., cb) ->
   if num = (emitter.listeners name).length
     emitter.emit name, a..., iferr cb, -> do cb unless --num
   else cb()
 
-async.install = (emitter=EventEmitter::) -> emitter.async = (a...) -> async this, a...
+emitAsync.install = (emitter=EventEmitter::) ->
+  emitter.emitAsync = (a...) -> emitAsync this, a...
 
-module.exports = async
+module.exports = emitAsync

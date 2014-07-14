@@ -1,6 +1,6 @@
 {
   "name": "emit-async",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Async event emitter for EventEmitter",
   "main": "index.js",
   "scripts": {
